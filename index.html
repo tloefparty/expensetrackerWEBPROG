@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>♡ my cute expense tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <span class="float" style="left:6%;top:12%;">🎀</span>
+  <span class="float" style="right:8%;top:20%;animation-delay:-3s;">💗</span>
+  <span class="float" style="left:12%;bottom:14%;animation-delay:-5s;">⭐</span>
+  <span class="float" style="right:10%;bottom:10%;animation-delay:-2s;">🍓</span>
+
+<main class="window">
+  <div class="titlebar">
+      <span class="heart">♡</span>
+      <span class="title" id="windowTitle">login.exe</span>
+      <div class="win-btns" aria-hidden="true">
+        <span>▭</span><span>▣</span><span class="close">X</span>
+      </div>
+    </div>
+
+    <div class="frame">
+
+
+
+      <!-- ================= LOGIN VIEW ================= -->
+      <section id="loginView">
+        <div class="band top">
+          <div class="pill headline">Welcome back ♡</div>
+        </div>
+
+        <div class="content">
+          <div class="user-pill"><span class="avatar"></span><span class="name">hello.jpg</span></div>
+
+          <div class="stats">
+            <div>( <span class="num">♥</span> ) log in to save your wallet</div>
+            <div>(<span class="num">99%</span>) cuteness loaded</div>
+          </div>
+
+          <div class="error" id="loginError" role="alert"></div>
+
+          <form id="loginForm" class="login-form" novalidate>
+            <div>
+              <label for="username">username</label>
+              <input type="text" id="username" placeholder="your name" maxlength="20" autocomplete="username" />
+            </div>
+            <div>
+              <label for="password">password</label>
+              <input type="password" id="password" placeholder="••••••" autocomplete="current-password" />
+            </div>
+            <div class="btn-row">
+              <button type="submit" class="btn accept" id="loginBtn">login &lt;3</button>
+              <span class="divider">or</span>
+              <button type="button" class="btn pill" id="guestBtn">continue as guest</button>
+            </div>
+            <p class="hint">demo login: any username + a password of 4+ characters</p>
+          </form>
+        </div>
+
+          <div class="band bottom">
+          <span>welcome!</span>
+          <span>symjuan.buzz</span>
+        </div>
+      </section>
+
+      <!-- ================= APP VIEW ================= -->
+      <section id="appView" hidden>
+        <div class="band top">
+          <div class="pill headline" id="panelHeadline">Expense Tracker</div>
+          <div class="filter-box" id="filterBox">
+            <label for="categoryFilter" style="position:absolute;left:-9999px;">Filter by category</label>
+            <select id="categoryFilter"></select>
+          </div>
+        </div>
+
+        <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
+          <button type="button" class="pill tab active" data-tab="tracker" role="tab" aria-selected="true">🍓 tracker</button>
+          <button type="button" class="pill tab" data-tab="budget" role="tab" aria-selected="false">🐷 budget</button>
+          <button type="button" class="pill tab" data-tab="calc" role="tab" aria-selected="false">🧮 calc</button>
+        </nav>
+
+
+        <!-- ---------- TAB 1: TRACKER ---------- -->
+        <div class="content" id="trackerPanel" role="tabpanel">
+          <div class="user-pill"><span class="avatar"></span><span class="name" id="userLabel">my_wallet.jpg</span></div>
+
+          <div class="stats">
+            <div>( <span class="num">♥</span> ) showing: <span class="num" id="statTotal">₱0.00</span></div>
+            <div>(<span class="num" id="statPct">0%</span>) of budget used</div>
+          </div>
+          <div class="meter" id="meter"><div id="meterFill"></div></div>
+          <div class="meter-note" id="meterNote">₱2,000.00 left</div>
+          <div class="meter-note filter-note" id="filterNote"></div>
+
+          <div class="error" id="error" role="alert"></div>
+
+          <form id="expenseForm" novalidate>
+            <div>
+              <label for="title">what did you buy?</label>
+              <input type="text" id="title" placeholder="e.g. strawberry milk" maxlength="40" autocomplete="off" />
+            </div>
+            <div class="row">
+              <div>
+                <label for="amount">amount (₱)</label>
+                <input type="number" id="amount" placeholder="0.00" step="0.01" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="category">category</label>
+                <div class="cat-wrap">
+                  <select id="category" class="cat"></select>
+                  <button type="button" class="pill plus-btn" id="toggleCatBtn" aria-label="Add a new category" aria-expanded="false" title="new category">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="new-cat" id="newCatBox" hidden>
+              <div class="error" id="catError" role="alert"></div>
+              <div class="new-cat-row">
+                <input type="text" id="newCatName" placeholder="new category name" maxlength="16" autocomplete="off" aria-label="New category name" />
+                <input type="text" id="newCatIcon" class="emoji-input" placeholder="🌸" maxlength="8" autocomplete="off" aria-label="Emoji (optional)" />
+                <button type="button" class="btn accept mini" id="addCatBtn">add</button>
+              </div>
+              <p class="hint">emoji is optional ♡</p>
+            </div>
+            <div class="btn-row">
+              <button type="submit" class="btn accept" id="addBtn">add &lt;3</button>
+              <button type="button" class="btn pill" id="resetBtn">clear :(</button>
+            </div>
+          </form>
+
+          <div class="chips" id="chips"></div>
+
+          <ul id="expenseList"></ul>
+
+          <div class="pill total-bar">
+            <span id="totalLabel">Total ♡</span>
+            <strong id="totalAmount">₱0.00</strong>
+          </div>
+        </div>
+
+          <!-- ---------- TAB 2: BUDGET ---------- -->
+        <div class="content" id="budgetPanel" role="tabpanel" hidden>
+          <div class="user-pill"><span class="avatar"></span><span class="name">piggy_bank.jpg</span></div>
+
+          <div class="stats">
+            <div>( <span class="num">♥</span> ) budget: <span class="num" id="bBudget">₱0.00</span></div>
+            <div>( <span class="num">♥</span> ) spent: <span class="num" id="bSpent">₱0.00</span></div>
+            <div>( <span class="num">♥</span> ) left: <span class="num" id="bLeft">₱0.00</span></div>
+          </div>
+          <div class="meter" id="bMeter"><div id="bMeterFill"></div></div>
+          <div class="meter-note" id="bMeterNote"></div>
+
+          <div class="error" id="budgetError" role="alert"></div>
+
+          <form id="budgetForm" class="inline-form" novalidate>
+            <div>
+              <label for="budgetInput">set your budget (₱)</label>
+              <input type="number" id="budgetInput" placeholder="e.g. 3000" step="0.01" inputmode="decimal" />
+            </div>
+            <button type="submit" class="btn accept" id="setBudgetBtn">set &lt;3</button>
+          </form>
+          <div class="btn-row">
+            <button type="button" class="pill mini-btn" id="clearBudgetBtn">clear budget ✕</button>
+            <button type="button" class="pill mini-btn" id="resetBudgetBtn">reset to ₱2,000</button>
+          </div>
+
+          <h3 class="section-title">( ♥ ) where it went</h3>
+          <p class="meter-note" style="margin-bottom:8px;">always counts every expense, no matter which filter is on</p>
+          <div class="cat-list" id="breakdown"></div>
+        </div>
+
+        <!-- ---------- TAB 3: CALCULATOR ---------- -->
+        <div class="content" id="calcPanel" role="tabpanel" hidden>
+          <div class="calc">
+            <div class="calc-screen" aria-live="polite">
+              <div class="calc-expr" id="calcExpr">&nbsp;</div>
+              <div class="calc-display" id="calcDisplay">0</div>
+            </div>
+            <div class="keys" id="calcKeys">
+              <button type="button" class="key fn" data-key="C">C</button>
+              <button type="button" class="key fn" data-key="back" aria-label="Backspace">⌫</button>
+              <button type="button" class="key fn" data-key="%">%</button>
+              <button type="button" class="key op" data-key="/" aria-label="Divide">÷</button>
+
+              <button type="button" class="key pill" data-key="7">7</button>
+              <button type="button" class="key pill" data-key="8">8</button>
+              <button type="button" class="key pill" data-key="9">9</button>
+              <button type="button" class="key op" data-key="*" aria-label="Multiply">×</button>
+
+              <button type="button" class="key pill" data-key="4">4</button>
+              <button type="button" class="key pill" data-key="5">5</button>
+              <button type="button" class="key pill" data-key="6">6</button>
+              <button type="button" class="key op" data-key="-" aria-label="Minus">−</button>
+
+              <button type="button" class="key pill" data-key="1">1</button>
+              <button type="button" class="key pill" data-key="2">2</button>
+              <button type="button" class="key pill" data-key="3">3</button>
+              <button type="button" class="key op" data-key="+" aria-label="Plus">+</button>
+
+              <button type="button" class="key pill zero" data-key="0">0</button>
+              <button type="button" class="key pill" data-key=".">.</button>
+              <button type="button" class="key eq" data-key="=">=</button>
+            </div>
+          </div>
+          <div class="calc-extras">
+            <button type="button" class="pill mini-btn" id="useTotalBtn">use shown total ♡</button>
+            <button type="button" class="pill mini-btn" id="useLeftBtn">use budget left ♡</button>
+          </div>
+        </div>
+
+
+        <div class="band bottom">
+          <span id="countLabel">0 items</span>
+          <button type="button" class="pill logout" id="logoutBtn">log out</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</body>
+</html>
